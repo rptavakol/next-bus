@@ -14,8 +14,7 @@ $(document).ready( function() {
     console.log('START of Script.');
 
 
-
-    //////////////////////////////////////////7///////
+//////////////////////////////////////////7///////
     //Master Data
     var lineColours = [["5","#00975f"],["21","#e30613"],["22","#fdc300"],["23","#e48f00"],["24","#8d2176"],["26","#f39b9a"],["27","#4e2583"],["28","#b2a0cd"],["29","#10bbef"],["30","#baabd4"],["31","#4b96d2"],["32","#a1c3d6"],["33","#0069b4"],["34","#009fe3"],["35","#4e2583"],["36","#b2a0cd"],
     ["37","#10bbef"],["38","#0097b5"],["39","#512985"],["M1","#f0d51f"],["M2","#f0d51f"],["M3","#f0d51f"],["M4","#f0d51f"],["M5","#f0d51f"]];
@@ -33,12 +32,105 @@ $(document).ready( function() {
 
 
     //Initial Ajax Call for default station
-    ajaxCall(stationID)
+    //ajaxCall(stationID)
     //setInterval(function () {ajaxCall(stationID);}, 3000)
     
 
 
 
+
+
+
+
+    //ajax GPS request main url
+var urlGPS = 'http://rnv.the-agent-factory.de:8080/easygo2/api/regions/rnv/modules/stations/packages/1';
+
+function ajaxCallGPS () {
+    console.log('Executing Ajax Call GPS');        //DB      
+    $.ajax({
+            beforeSend: function(request) {
+            //set header and API key
+                request.setRequestHeader("RNV_API_TOKEN", 'sauv277demidl1do7imandb9pk');
+            },
+            dataType: "json",
+            url: urlGPS,
+            async : true,
+
+            success: closestStation,       
+
+            error: function() {
+                console.log('Error occured');
+            }
+
+        });
+    
+};
+
+ajaxCallGPS();
+//ajaxCall(1187);
+//formula
+//d=2*asin(sqrt((sin((lat1-lat2)/2))^2 + cos(lat1)*cos(lat2)*(sin((lon1-lon2)/2))^2))
+
+var latO = 49.4028922222;
+var lonO = 8.6810972222;
+
+latO = 49.404759;
+lonO = 8.684969;
+
+console.log("x: ", Array)
+
+
+function closestStation(data) {
+
+    var stationObject = data;
+    var min = 10000000;
+    var closestStation = null;
+
+    for (var i = 0; i < stationObject["stations"].length; i++ ) {
+
+        //call calcDsitance function
+        var distance = calcDistance(latO, lonO, 
+        stationObject["stations"][i]["latitude"]    //latA
+        , 
+        stationObject["stations"][i]["longitude"]   //lonA
+        )
+
+        if(distance < min) {
+            min = distance;
+            //closestStation = stationObject["stations"][i]["longName"];
+            closestStation = stationObject["stations"][i]["hafasID"];
+            closestStationName = stationObject["stations"][i]["longName"];
+        }
+        
+
+
+        console.log("iterating...")
+    }
+
+    console.log(closestStation);
+    console.log(closestStationName);
+    ajaxCall(closestStation);
+    //logStation(closestStation);
+    //console.log("distance: ", distance)
+
+};
+
+function calcDistance (latO, lonO, latA, lonA) {
+
+    var result = 2* Math.asin(Math.sqrt((Math.sin((latO-latA)/2))**2 + Math.cos(latO)*Math.cos(latA)*(Math.sin((lonO-lonA)/2))**2))
+
+    return result;
+
+    //var b = 2* Math.asin(Math.sqrt((Math.sin((latO-lat3)/2))**2 + Math.cos(latO)*Math.cos(lat3)*(Math.sin((lonO-lonA)/2))**2))
+}
+
+function logStation(stationName) {
+    console.log("stationName:", stationName)
+};
+
+
+
+    
 
 
     //User Station ID selection Logic, triggers ajax call
@@ -66,7 +158,7 @@ $(document).ready( function() {
 
 
     function ajaxCall (stationID) {
-     console.log('Executing Ajax Call');        //DB      
+     console.log('Executing Ajax Call with stationID', stationID);        //DB      
         $.ajax({
                     beforeSend: function(request) {
                     //set header and API key
