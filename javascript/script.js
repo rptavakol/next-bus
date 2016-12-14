@@ -37,6 +37,25 @@ $(document).ready( function() {
     
 
 
+function getLocation() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(storePosition);
+        //callback?
+        ajaxCallGPS();
+    } else {
+        x.innerHTML = "Geolocation is not supported by this browser.";
+    }
+
+
+
+}
+
+function storePosition(position) {
+    latO = position.coords.latitude;
+    lonO = position.coords.longitude; 
+}
+
+getLocation();
 
 
 
@@ -66,16 +85,22 @@ function ajaxCallGPS () {
     
 };
 
-ajaxCallGPS();
+//ajaxCallGPS();
 //ajaxCall(1187);
 //formula
 //d=2*asin(sqrt((sin((lat1-lat2)/2))^2 + cos(lat1)*cos(lat2)*(sin((lon1-lon2)/2))^2))
 
-var latO = 49.4028922222;
-var lonO = 8.6810972222;
+latO = 49.4028922222;
+lonO = 8.6810972222;
 
+//RoemerKReis
 latO = 49.404759;
 lonO = 8.684969;
+
+latO = 49.405017; 
+lonO = 8.681056;
+
+
 
 console.log("x: ", Array)
 
@@ -84,7 +109,7 @@ function closestStation(data) {
 
     var stationObject = data;
     var min = 10000000;
-    var closestStation = null;
+    closestStation = null;
 
     for (var i = 0; i < stationObject["stations"].length; i++ ) {
 
@@ -98,8 +123,7 @@ function closestStation(data) {
         if(distance < min) {
             min = distance;
             //closestStation = stationObject["stations"][i]["longName"];
-            closestStation = stationObject["stations"][i]["hafasID"];
-            closestStationName = stationObject["stations"][i]["longName"];
+            closestStation = [ stationObject["stations"][i]["hafasID"],  stationObject["stations"][i]["longName"] ]; 
         }
         
 
@@ -107,8 +131,8 @@ function closestStation(data) {
         console.log("iterating...")
     }
 
-    console.log(closestStation);
-    console.log(closestStationName);
+    console.log("closest station ID", closestStation[0]);
+    console.log("closest station Name", closestStation[1]);
     ajaxCall(closestStation);
     //logStation(closestStation);
     //console.log("distance: ", distance)
@@ -277,6 +301,12 @@ function logStation(stationName) {
 
         //Make location icon blink everytime table is updated
         $('.glyphicon-map-marker').fadeToggle(1000).fadeToggle(450);
+
+        //Changes heading to current station
+        console.log("about to change heading to", closestStation[1]);
+        $("#dropdownMenu1").html("" + closestStation[1])
+
+        //$("#dropdownMenu1").textContent = "", closestStation[1], " ";
     };
 
 console.log('END of Script.')
