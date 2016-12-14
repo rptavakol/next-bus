@@ -35,6 +35,16 @@ $(document).ready( function() {
     //ajaxCall(stationID)
     //setInterval(function () {ajaxCall(stationID);}, 3000)
     
+latO = 49.4028922222;
+lonO = 8.6810972222;
+
+//RoemerKReis
+latO = 49.404759;
+lonO = 8.684969;
+
+latO = 49.405017; 
+lonO = 8.681056;
+
 
 
 function getLocation() {
@@ -90,19 +100,8 @@ function ajaxCallGPS () {
 //formula
 //d=2*asin(sqrt((sin((lat1-lat2)/2))^2 + cos(lat1)*cos(lat2)*(sin((lon1-lon2)/2))^2))
 
-latO = 49.4028922222;
-lonO = 8.6810972222;
-
-//RoemerKReis
-latO = 49.404759;
-lonO = 8.684969;
-
-latO = 49.405017; 
-lonO = 8.681056;
 
 
-
-console.log("x: ", Array)
 
 
 function closestStation(data) {
