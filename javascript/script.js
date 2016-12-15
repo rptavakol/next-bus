@@ -51,7 +51,6 @@ function getLocation() {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(storePosition);
         //callback?
-        ajaxCallGPS();
     } else {
         x.innerHTML = "Geolocation is not supported by this browser.";
     }
@@ -63,6 +62,7 @@ function getLocation() {
 function storePosition(position) {
     latO = position.coords.latitude;
     lonO = position.coords.longitude; 
+    ajaxCallGPS();
 }
 
 getLocation();
