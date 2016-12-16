@@ -1,6 +1,6 @@
 $(document).ready( function() {
 
-    console.log('running jquery-script')        //DB
+    //console.log('running jquery-script')        //DB
     
     $( "#search" ).hide();
 
