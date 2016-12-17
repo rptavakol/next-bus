@@ -54,31 +54,6 @@ $(document).ready( function() {
         } else {
             console.log("Alert: Geolocation is not supported by this browser.");
         }
-
-<<<<<<< HEAD
-function getLocation() {
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(storePosition);
-        //callback?
-    } else {
-        x.innerHTML = "Geolocation is not supported by this browser.";
-    }
-
-
-
-}
-
-function storePosition(position) {
-    latO = position.coords.latitude;
-    lonO = position.coords.longitude; 
-    ajaxCallGPS();
-}
-
-getLocation();
-
-
-
-=======
     }
 
     //stores user's current position into global variables
@@ -89,7 +64,6 @@ getLocation();
        //callback - retrieves object with geo-data of all stations
         ajaxCallGPS();        
     }
->>>>>>> 91b068901aee2604829999cb60ac29a5fb5e0fc8
 
 
     //ajax GPS request main url
