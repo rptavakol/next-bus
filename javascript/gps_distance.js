@@ -5,6 +5,38 @@ Created by Peyman (Ryan) Tavakol
 //ajax GPS request main url
 var urlGPS = 'http://rnv.the-agent-factory.de:8080/easygo2/api/regions/rnv/modules/stations/packages/1';
 
+
+var latO = 49.4028922222;
+var lonO = 8.6810972222;
+
+latO = 49.404759;
+lonO = 8.684969;
+
+//trigger getLocation function once page is loaded
+getLocation();
+
+//asks user for currrent position
+function getLocation() {
+    if (navigator.geolocation) {
+        //store position
+        navigator.geolocation.getCurrentPosition(storePosition);
+        //callback - retrieves object with geo-data of all stations
+        //ajaxCallGPS();
+    } else {
+        x.innerHTML = "Geolocation is not supported by this browser.";
+    }
+
+}
+
+//stores user's current position into global variables
+function storePosition(position) {
+    latO = position.coords.latitude;
+    lonO = position.coords.longitude; 
+    console.log('current location:', latO)
+    ajaxCallGPS();
+}
+
+
 function ajaxCallGPS () {
     console.log('Executing Ajax Call');        //DB      
     $.ajax({
@@ -26,19 +58,6 @@ function ajaxCallGPS () {
     
 };
 
-ajaxCallGPS();
-
-//formula
-//d=2*asin(sqrt((sin((lat1-lat2)/2))^2 + cos(lat1)*cos(lat2)*(sin((lon1-lon2)/2))^2))
-
-var latO = 49.4028922222;
-var lonO = 8.6810972222;
-
-latO = 49.404759;
-lonO = 8.684969;
-
-console.log("x: ", Array)
-
 
 function closestStation(data) {
 
@@ -55,18 +74,20 @@ function closestStation(data) {
         stationObject["stations"][i]["longitude"]   //lonA
         )
 
+        //if distance of current iteration is smaller than curren min, replace min with current distance
         if(distance < min) {
             min = distance;
             //closestStation = stationObject["stations"][i]["longName"];
-            closestStation = stationObject["stations"][i]["hafasID"];
+            closestStation = [ stationObject["stations"][i]["hafasID"],  stationObject["stations"][i]["longName"] ]; 
         }
         
 
 
         console.log("iterating...")
     }
-
-    ajaxCall(closestStation);
+    console.log("closest station ID", closestStation[0]);
+    console.log("closest station Name", closestStation[1]);
+    //ajaxCall(closestStation);
     //logStation(closestStation);
     //console.log("distance: ", distance)
 

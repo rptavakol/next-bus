@@ -11,10 +11,11 @@ Created by Peyman (Ryan) Tavakol
 
 $(document).ready( function() {
 
-    console.log('START of Script.');
+    console.log('START of Script..');
 
 
-//////////////////////////////////////////7///////
+    //////////////////////////////////////////7///////
+
     //Master Data
     var lineColours = [["5","#00975f"],["21","#e30613"],["22","#fdc300"],["23","#e48f00"],["24","#8d2176"],["26","#f39b9a"],["27","#4e2583"],["28","#b2a0cd"],["29","#10bbef"],["30","#baabd4"],["31","#4b96d2"],["32","#a1c3d6"],["33","#0069b4"],["34","#009fe3"],["35","#4e2583"],["36","#b2a0cd"],
     ["37","#10bbef"],["38","#0097b5"],["39","#512985"],["M1","#f0d51f"],["M2","#f0d51f"],["M3","#f0d51f"],["M4","#f0d51f"],["M5","#f0d51f"]];
@@ -27,26 +28,34 @@ $(document).ready( function() {
     //Ringstrasse as Default Station
     var defaultStation = ['6791','Ringstrasse'];
     stationID = defaultStation;
+
+    /* DB Only
+    //RoemerKReis
+    latO = 49.404759;
+    lonO = 8.684969;
+    */
+
     ///////////////////////////////////////////////////
-
-
 
     //Initial Ajax Call for default station
     //ajaxCall(stationID)
     //setInterval(function () {ajaxCall(stationID);}, 3000)
     
-latO = 49.4028922222;
-lonO = 8.6810972222;
 
-//RoemerKReis
-latO = 49.404759;
-lonO = 8.684969;
+    //trigger getLocation function once page is loaded
+    getLocation();
 
-latO = 49.405017; 
-lonO = 8.681056;
+    //asks user for currrent position
+    function getLocation() {
+        if (navigator.geolocation) {
+           //store position
+           console.log("-> Asking for user location..");
+           navigator.geolocation.getCurrentPosition(storePosition);
+        } else {
+            console.log("Alert: Geolocation is not supported by this browser.");
+        }
 
-
-
+<<<<<<< HEAD
 function getLocation() {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(storePosition);
@@ -69,96 +78,106 @@ getLocation();
 
 
 
+=======
+    }
+
+    //stores user's current position into global variables
+    function storePosition(position) {
+        latO = position.coords.latitude;
+        lonO = position.coords.longitude; 
+        console.log("-> Succesfully aquired user location.");
+       //callback - retrieves object with geo-data of all stations
+        ajaxCallGPS();        
+    }
+>>>>>>> 91b068901aee2604829999cb60ac29a5fb5e0fc8
 
 
     //ajax GPS request main url
-var urlGPS = 'http://rnv.the-agent-factory.de:8080/easygo2/api/regions/rnv/modules/stations/packages/1';
+    var urlGPS = 'http://rnv.the-agent-factory.de:8080/easygo2/api/regions/rnv/modules/stations/packages/1';
 
-function ajaxCallGPS () {
-    console.log('Executing Ajax Call GPS');        //DB      
-    $.ajax({
-            beforeSend: function(request) {
-            //set header and API key
-                request.setRequestHeader("RNV_API_TOKEN", 'sauv277demidl1do7imandb9pk');
-            },
-            dataType: "json",
-            url: urlGPS,
-            async : true,
+    //retrieves object with geo-data of all stations
+    function ajaxCallGPS () {
 
-            success: closestStation,       
+        console.log('-> Executing ajaxCallGPS() to get coordinates of all stations');        //DB      
+        
+        $.ajax({
+                beforeSend: function(request) {
+                    //set header and API key
+                    request.setRequestHeader("RNV_API_TOKEN", 'sauv277demidl1do7imandb9pk');
+                },
+                dataType: "json",
+                url: urlGPS,
+                async : true,
 
-            error: function() {
-                console.log('Error occured');
+                //callback
+                success: closestStation,       
+
+                error: function() {
+                    console.log('Error occured');
+                }
+
+            });
+        
+    };
+
+
+
+
+    //Finds the station with the smallest distance from current location 
+    function closestStation(data) {
+        
+        console.log('-> Executing closestStation() with this object:', data);        //DB      
+
+        var stationObject = data;
+        
+        //Initial shortest distance (min) = distance from first station in object
+        var min = calcDistance(latO, lonO, 
+            stationObject["stations"][0]["latitude"]    //latA
+            , 
+            stationObject["stations"][0]["longitude"]   //lonA
+            );
+
+        closestStation = null;
+
+        //Loops through all stations, calculates distance from current location, and finds the closest
+        for (var i = 0; i < stationObject["stations"].length; i++ ) {
+
+            //call calcDsitance function
+            var distance = calcDistance(latO, lonO, 
+            stationObject["stations"][i]["latitude"]    //latA
+            , 
+            stationObject["stations"][i]["longitude"]   //lonA
+            )
+
+            //if distance of current iteration is smaller than current min, replace min with current distance
+            if(distance < min) {
+                min = distance;
+                closestStation = [ stationObject["stations"][i]["hafasID"],  stationObject["stations"][i]["longName"] ]; 
             }
 
-        });
-    
-};
-
-//ajaxCallGPS();
-//ajaxCall(1187);
-//formula
-//d=2*asin(sqrt((sin((lat1-lat2)/2))^2 + cos(lat1)*cos(lat2)*(sin((lon1-lon2)/2))^2))
-
-
-
-
-
-function closestStation(data) {
-
-    var stationObject = data;
-    var min = 10000000;
-    closestStation = null;
-
-    for (var i = 0; i < stationObject["stations"].length; i++ ) {
-
-        //call calcDsitance function
-        var distance = calcDistance(latO, lonO, 
-        stationObject["stations"][i]["latitude"]    //latA
-        , 
-        stationObject["stations"][i]["longitude"]   //lonA
-        )
-
-        if(distance < min) {
-            min = distance;
-            //closestStation = stationObject["stations"][i]["longName"];
-            closestStation = [ stationObject["stations"][i]["hafasID"],  stationObject["stations"][i]["longName"] ]; 
+            console.log("-> Looping to find closest station...")
         }
+
+        console.log("-> Closest station found: ", closestStation);
         
+        //Call stationObject of closestStation
+        ajaxCall(closestStation);
+    };
 
+    //Returns distance between two geo locations
+    function calcDistance (latO, lonO, latA, lonA) {
 
-        console.log("iterating...")
+        //formula for finding distance between two coordinates
+        var result = 2* Math.asin(Math.sqrt((Math.sin((latO-latA)/2))**2 + Math.cos(latO)*Math.cos(latA)*(Math.sin((lonO-lonA)/2))**2))
+
+        return result;
     }
 
-    console.log("closest station ID", closestStation[0]);
-    console.log("closest station Name", closestStation[1]);
-    ajaxCall(closestStation);
-    //logStation(closestStation);
-    //console.log("distance: ", distance)
-
-};
-
-function calcDistance (latO, lonO, latA, lonA) {
-
-    var result = 2* Math.asin(Math.sqrt((Math.sin((latO-latA)/2))**2 + Math.cos(latO)*Math.cos(latA)*(Math.sin((lonO-lonA)/2))**2))
-
-    return result;
-
-    //var b = 2* Math.asin(Math.sqrt((Math.sin((latO-lat3)/2))**2 + Math.cos(latO)*Math.cos(lat3)*(Math.sin((lonO-lonA)/2))**2))
-}
-
-function logStation(stationName) {
-    console.log("stationName:", stationName)
-};
-
-
-
-    
 
 
     //User Station ID selection Logic, triggers ajax call
     $('.jQStation').on('click', function(){
-    //On station click, do the following:        
+        //On station click, do the following:        
         //Initialize array
         var selectedStationID = [];
         //Add unique station ID to array 
@@ -181,7 +200,9 @@ function logStation(stationName) {
 
 
     function ajaxCall (stationID) {
-     console.log('Executing Ajax Call with stationID', stationID);        //DB      
+        
+        console.log('-> Executing ajaxCall() on closest station');        //DB      
+        
         $.ajax({
                     beforeSend: function(request) {
                     //set header and API key
@@ -194,12 +215,12 @@ function logStation(stationName) {
                     success: createCurrStationScheduleArray,       
 
                     error: function() {
-                        console.log('Error occured');
+                        console.log('AjaxCall() Error occured');
                     }
 
                 });
             
-        };
+    };
 
     
     
@@ -207,28 +228,32 @@ function logStation(stationName) {
     function createCurrStationScheduleArray(data) {
 
                 var stationObject = data;
-                console.log('stationObject:', stationObject);
+
+                console.log("-> Current stationObject:", stationObject)
 
                 currStationSchedule = [];
                 currPair = [];
                 
-                //notice: myArray[i] = [timeDiff, [lineID, direction, bustop, colorClass]]
+                //Loop through next 10 departures from station and save relevant data into array
+                //Notice format: myArray[i] = [timeDiff, [lineID, direction, bustop, colorClass]]
                 for(var i = 0; i < stationObject['listOfDepartures'].length; i++) {
+                    
                     currPair = [    stationObject['listOfDepartures'][i]['differenceTime'], 
                                     [
                                     stationObject['listOfDepartures'][i]['lineLabel'],
                                     stationObject['listOfDepartures'][i]['direction'], 
                                     'Ab '+stationID[1],                    
                                     'iris'
-                                    //'#' + stationObject['color'] 
                                     ]
                                     ];
+
                     //push pair for each train into currentSchedule
                     currStationSchedule.push(currPair);
                 };                        
             
-            //console.log("currStationSchedule:", currStationSchedule)     //DB
-            convertToTable(matchLineColours(lineColours, currStationSchedule));
+            var table = convertToTable(matchLineColours(lineColours, currStationSchedule));
+            console.log("-> CurrStationSchedule:", currStationSchedule)     //DB
+            injectIntoDOM(table);
     };
 
     //Returns currStationSchedule with all line colours to createCurrStationScheduleArray
@@ -257,9 +282,6 @@ function logStation(stationName) {
         for(var i=0; i<myArray.length; i++) {
         //notice: myArray[i] = [timeDiff, [lineID, direction, bustop, colorClass]]
 
-            //print css class
-            //result += "<tr class=" + myArray[i][1][3] + ">"
-
             if (myArray[i][1][3].slice(0,1) != '#') {
                 result += "<tr class='" + myArray[i][1][3] + "'>" ;
             }
@@ -281,9 +303,8 @@ function logStation(stationName) {
         }
         result += "</tbody>";
 
-        injectIntoDOM(result)
-
-        //return result;
+        //injectIntoDOM(result)
+        return result;
     };
 
     //Inserts table into DOM
@@ -302,37 +323,13 @@ function logStation(stationName) {
         $('.glyphicon-map-marker').fadeToggle(1000).fadeToggle(450);
 
         //Changes heading to current station
-        console.log("about to change heading to", closestStation[1]);
+        //console.log("about to change heading to", closestStation[1]);     //DB
         $("#dropdownMenu1").html("" + closestStation[1])
 
         //$("#dropdownMenu1").textContent = "", closestStation[1], " ";
+
+        console.log('END of Script.')
     };
 
-console.log('END of Script.')
 
 });
-
-
-/*
-
-var lat1 = 30
-var lon1 = 39
-
-var lat2 = 30
-var lon2 = 37
-
-
-var lat3 = 28
-var lon3 = 21
-
-
-//d=2*asin(sqrt((sin((lat1-lat2)/2))^2 + cos(lat1)*cos(lat2)*(sin((lon1-lon2)/2))^2))
-
-var a = 2* Math.asin(Math.sqrt((Math.sin((lat1-lat2)/2))**2 + Math.cos(lat1)*Math.cos(lat2)*(Math.sin((lon1-lon2)/2))**2))
-
-var b = 2* Math.asin(Math.sqrt((Math.sin((lat1-lat3)/2))**2 + Math.cos(lat1)*Math.cos(lat3)*(Math.sin((lon1-lon3)/2))**2))
-
-alert(a)
-alert(b)
-
-*/
