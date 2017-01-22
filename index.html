@@ -10,9 +10,8 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
         <!--<link rel="stylesheet" href="css/bootstrap.min.css"> -->
 
-        <!-- Optional theme -->
-        <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous"> -->
-        <link rel="stylesheet" href="css/main.css">
+        <link rel="stylesheet" type="text/css" href="css/main.css">
+        <link rel="stylesheet" type="text/css" href="main.css">
 
 
         <!-- for mobile zooming and rendering-->
@@ -25,11 +24,11 @@
           integrity="sha256-16cdPddA6VdVInumRGo6IbivbERE8p7CQR3HzTBuELA="
           crossorigin="anonymous"></script>
         <!-- <script src="javascript/jquery-3.1.0.min.js"> </script> -->
-        
-        <script src="javascript/script.js"> </script> 
-        <script src="javascript/jquery-script.js"> </script> 
-        <scriptX src="javascript/gps_distance.js"> </script> 
-		
+
+        <script src="javascript/script.js"> </script>
+        <script src="javascript/jquery-script.js"> </script>
+        <scriptX src="javascript/gps_distance.js"> </script>
+
 
     </head>
 
@@ -51,19 +50,19 @@
 					<div id="home" class="col-xs-3 jQlocation locSelected">
 						<span class="glyphicon glyphicon-map-marker center-icon" aria-hidden="true"></span>
 						<h4>Ringstr</h4>
-						
+
 					</div>
-					
+
 					<div id="hd_bisi" class="col-xs-3 jQlocation">
 						<span class="glyphicon glyphicon-map-marker center-icon" aria-hidden="true"></span>
 						<h4>HD Bisi</h4>
-						
+
 					</div>
-					
+
 					<div id="hd_hbf" class="col-xs-3 jQlocation">
 						<span class="glyphicon glyphicon-map-marker center-icon" aria-hidden="true"></span>
 						<h4>HD HBF</h4>
-						
+
 					</div>
 
 				</div>
@@ -85,28 +84,28 @@
 
 
                 <div class="row">
-                    <div class="col-xs-2"> 
-						<span class="glyphicon glyphicon-map-marker center-icon" aria-hidden="true"></span>                        
+                    <div class="col-xs-2">
+						<span class="glyphicon glyphicon-map-marker center-icon" aria-hidden="true"></span>
                     </div>
                     <div class="col-xs-8" style="padding: 0;">
                         <div class="dropdown">
-                            
+
                             <button class="btn btn-default dropdown-toggle btn-custom" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                 Ringstrasse
                                 <span class="caret"></span>
                             </button>
 
                             <ul class="dropdown-menu dropdown-menu-custom" aria-labelledby="dropdownMenu1">
-                                
+
                                 <li class="dropdown-header">Favourites</li>
-                                
+
                                 <li><a id="SAP" class="jQStation" href="#">SAP</a></li>
                                 <li><a id="6791" class="jQStation" href="#">Ringstrasse</a></li>
                                 <li><a id="1146" class="jQStation" href="#">HD Bismarckplatz</a></li>
                                 <li><a id="1160" class="jQStation" href="#">HD Hauptbahnhof</a></li>
-                                
+
                                 <li role="separator" class="divider"></li>
-                                
+
                                 <li><a id="1216" class="jQStation" href="#">Odenwaldstrasse</a></li>
                                 <li><a id="1276" class="jQStation" href="#">Rohrbachmarkt</a></li>                       <li><a id="1198" class="jQStation" href="#">Universit&auml;tsplatz</a></li>
                                 <li><a id="1278" class="jQStation" href="#">Rohrbach S&uuml;d</a></li>
@@ -115,7 +114,7 @@
                                 <li><a id="1879" class="jQStation" href="#">Leimen Friedhof</a></li>
                                 <li><a id="1329" class="jQStation" href="#">Stiftsm&uuml;hle</a></li>
                             </ul>
-                        
+
                         </div>
                     </div>
 
@@ -126,13 +125,13 @@
                 </div>
 
                 <div class="row" id='search'>
-                    <input id="station-search" type="text" class="" placeholder="Search Stations" name="q" autocomplete="off">                
+                    <input id="station-search" type="text" class="" placeholder="Search Stations" name="q" autocomplete="off">
                 </div>
 
 
-				
+
 				</div>
-			
+
 			</div>
 
 
@@ -140,8 +139,8 @@
 
 	<!-- Table Begin -->
             <table id="busTable" class='table table-responsive auto table-condensed'>
-                
-                <!-- For testing only 
+
+                <!-- For testing only
                 <tr id="tr22" class="iris">
                     <td class="small busInfo">
                         <h4>Bus 721</h4>
@@ -154,7 +153,7 @@
                     <td class="small busInfo col-xs-8">Bus 721</td>
                     <td id="td23" class="busTime col-xs-4">23:15</td>
                 </tr>-->
-                           
+
 
                 </tbody>
 
@@ -165,13 +164,306 @@
 
 
 
-       
-       
+
+
         <!-- Latest compiled and minified JavaScript -->
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
-        
+
     </body>
 
+
+<style media="screen">
+  /* Useful Bootstrap CSS classes:
+
+      text-left       (-center, right, jsutify, nowrap)
+
+
+  */
+
+  body {
+      background-color: #CCC;
+  }
+
+  .row {
+      margin-left: 0;
+      margin-right: 0;
+  }
+
+  tr td {
+      width: 66px;
+      color: white;
+  }
+
+  tr {
+      width: 66px;
+      height: 25px;
+  }
+
+  #dropdownMenu1 {
+      font-size: 20pt;
+  }
+
+  .container-fluid {
+      padding: 0px;
+      max-width: 525px;
+      min-width: 325px;
+      box-shadow: 2px 2px 5px #888888;
+  }
+
+  .hidden {
+      display: none;
+  }
+
+  #busTable {
+      position: relative;
+  }
+
+  .table {
+      top: 62px;
+  }
+
+  #header {
+      top: 0px;
+      position: fixed;
+      width: 525px;
+      z-index: 1;
+      display: block;
+  }
+
+  #header-bar div p {
+      margin: 10px 0 7px 0;
+      font-size: 15px;
+  }
+
+  #header-bar {
+      background-color: #014185;
+      background-color: #333;
+      background-color: #EBA023;
+      color: white;
+  }
+
+  .busInfo {
+      vertical-align: middle;
+  }
+
+  .busInfo > h4 {
+      font-size: 25px;
+  }
+
+  .busTime {
+      font-size: 50px;
+      vertical-align: middle !important;
+  }
+
+  .busTime p {
+      font-size: 17px;
+      position: relative;
+      bottom: 5px;
+
+  }
+
+  .iris {
+      background-color: purple;
+  }
+
+  .valor {
+      background-color:#FF7216;
+      background-color:  #0198E1;
+  }
+
+  .mystic {
+      background-color: #00AEF0;
+      xbackground-color: #05EDFF;
+      background-color:  #089D29;
+      background-color: #014185;
+  }
+
+  .intuition {
+      background-color:#FF510F;
+      background-color:#FF7216;
+      background-color: #89e0f0;
+      background-color:  #089D29;
+  }
+
+  .memento {
+      background-color: #FF7216;
+  }
+
+  .valor, .intuition, .mystic {
+      xbackground-color: #00AEF0;
+  }
+
+  td p {
+      line-height: 10px;
+      font-size: 14px;
+  }
+
+  .glyphicon {
+      font-size: 12px;
+  }
+
+  .dark {
+      color: #EEE;
+  }
+
+  #locations {
+      margin: 0px;
+      display: none;
+  }
+
+  #locations > div {
+      padding: 10px 0 0 0;
+      cursor: pointer;
+      border-left: 2px solid #DDD;
+      height: 60px;
+  }
+
+  #selectedStop {
+      display: none;
+  }
+
+  #SAP {
+      border-left: none !important; /* optimeize and then remove this */
+  }
+
+  #locations > div:hover {
+      background-color: #014185;
+      background-color: #ddd;
+      color: white;
+      color: #333; a
+  }
+
+
+  #locations h4 {
+      font-size: 13px;
+      text-align: center;
+  }
+
+  .vcenter {
+      vertical-align: middle;
+  }
+
+  .center-icon {
+      top: 8px;
+      display: block;
+      margin: 0 auto;
+      width: 28px;
+      font-size: 29px;
+  }
+
+  .locSelected {
+      background-color: #014185;
+      background-color: #333;
+      background-color: #EBA023;
+      color: white;
+  }
+
+  .locSelected:hover {
+      background-color: #EBA023;
+      background-color: #333 !important;
+      color: white !important;
+  }
+
+  .bg-light-grey {
+      background-color: #EEE;
+  }
+
+  .h-border-dark {
+      border-bottom: 3px solid #333;
+  }
+
+  .second-table > tbody  tr  td {
+      margin: 0;
+      padding: 0;
+  }
+
+  .second-table {
+      margin-bottom: 5px;
+  }
+
+  .busInfo *{
+      border: solid 1px white;
+      border: none !important;
+      background-color: transparent !important;
+  }
+
+  .busName {
+      font-size: 35px;
+      margin: 10px 0 0 3px;
+  }
+
+  .busDirection, .busStop {
+      padding: 5px 0 0 3px ;
+      margin: 0px;
+      font-size: 17px;
+  }
+
+  .busStop {
+      font-size: 95%;
+      padding-top: 5px;
+  }
+
+  .btn-custom {
+      width: 100%;
+      border: none;
+      border-radius: 0;
+      background-color: #333;
+      background-color: #eba023;
+      color: white;
+  }
+
+  .btn-custom:hover {
+      background-color: #333;
+      color: white;
+  }
+
+  .btn-custom:focus {
+      background-color: #333 !important;
+      color: white !important;
+  }
+
+  .btn-custom:active {
+      background-color: #333 !important;
+      color: white !important;
+  }
+
+  #station-search {
+      width: 92%;
+      margin: 10px auto;
+      display: block;
+  }
+
+  .move-table {
+      top: 102px;
+  }
+
+  .dropdown-menu-custom {
+      width: 100%;
+      margin-top: 0px;
+      border: none;
+      border-radius: 0;
+      background-color: #333;
+      color: #DDD;
+  }
+
+  .dropdown-menu-custom > li >a {
+      color: white;
+  }
+
+  @media only screen and (max-device-width: 667px)
+  and (-webkit-device-pixel-ratio: 2) {
+
+  #header {
+      width: 375px;
+  }
+
+  #busTable {
+      border-left: none;
+      border-right: none;
+  }
+
+  }
+</style>
 
 </html>

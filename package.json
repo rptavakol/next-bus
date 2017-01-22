@@ -1,0 +1,26 @@
+{
+  "name": "next-bus",
+  "version": "1.0.0",
+  "description": "An application shows the user when the next Bus is leaving from a selected list of bus station.",
+  "main": "app.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rptavakol/next-bus.git"
+  },
+  "author": "RPTAVAKOL",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rptavakol/next-bus/issues"
+  },
+  "homepage": "https://github.com/rptavakol/next-bus#readme",
+  "dependencies": {
+    "express": "^4.14.0"
+  },
+  "devDependencies": {}
+}
