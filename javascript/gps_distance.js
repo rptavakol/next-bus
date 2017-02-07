@@ -1,10 +1,11 @@
 /*
+This application shows the user when the next Bus is leaving from a selected list of bus station.
+
 Created by Peyman (Ryan) Tavakol
 */
 
 //ajax GPS request main url
 var urlGPS = 'http://rnv.the-agent-factory.de:8080/easygo2/api/regions/rnv/modules/stations/packages/1';
-
 
 var latO = 49.4028922222;
 var lonO = 8.6810972222;
@@ -31,14 +32,14 @@ function getLocation() {
 //stores user's current position into global variables
 function storePosition(position) {
     latO = position.coords.latitude;
-    lonO = position.coords.longitude; 
+    lonO = position.coords.longitude;
     console.log('current location:', latO)
     ajaxCallGPS();
 }
 
 
 function ajaxCallGPS () {
-    console.log('Executing Ajax Call');        //DB      
+    console.log('Executing Ajax Call');        //DB
     $.ajax({
             beforeSend: function(request) {
             //set header and API key
@@ -48,14 +49,14 @@ function ajaxCallGPS () {
             url: urlGPS,
             async : true,
 
-            success: closestStation,       
+            success: closestStation,
 
             error: function() {
                 console.log('Error occured');
             }
 
         });
-    
+
 };
 
 
@@ -68,9 +69,9 @@ function closestStation(data) {
     for (var i = 0; i < stationObject["stations"].length; i++ ) {
 
         //call calcDsitance function
-        var distance = calcDistance(latO, lonO, 
+        var distance = calcDistance(latO, lonO,
         stationObject["stations"][i]["latitude"]    //latA
-        , 
+        ,
         stationObject["stations"][i]["longitude"]   //lonA
         )
 
@@ -78,9 +79,9 @@ function closestStation(data) {
         if(distance < min) {
             min = distance;
             //closestStation = stationObject["stations"][i]["longName"];
-            closestStation = [ stationObject["stations"][i]["hafasID"],  stationObject["stations"][i]["longName"] ]; 
+            closestStation = [ stationObject["stations"][i]["hafasID"],  stationObject["stations"][i]["longName"] ];
         }
-        
+
 
 
         console.log("iterating...")
@@ -129,14 +130,14 @@ function logStation(stationName) {
 /*
 function createGPSArray(data){
 
-    console.log('Executing createGPSArray');        //DB      
+    console.log('Executing createGPSArray');        //DB
 
     var stationObject = data;
 
-    console.log(stationObject);        //DB     
+    console.log(stationObject);        //DB
 
     var GPSArray =[];
-    
+
     //store each LONG and LAT of each station in array
     //format  [[long],[lat],[ID]]
     for(var i = 0; i < stationObject["stations"].length; i++){
@@ -145,5 +146,5 @@ function createGPSArray(data){
 
 //    console.log(GPSArray.toString())
     //console.log(JSON.stringify(GPSArray))
-        
+
     } */
