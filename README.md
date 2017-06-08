@@ -1,2 +1,2 @@
 # next-bus
-An application shows the user when the next Bus is leaving from a selected list of bus station.
+A web application that uses the RNV Start.Info APi to show the user when the next bus is leaving from almost any bus stations in the Rhein Neckar region in Germany.
