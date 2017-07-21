@@ -67,7 +67,7 @@ $(document).ready(function(){
 
          $.ajax({
             type : "POST",
-            url : "../../run_test",
+            url : "../../run",
             data: JSON.stringify(data),
             dataType: "json",
             contentType: "application/json; charset=utf-8",
